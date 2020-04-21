@@ -1,0 +1,21 @@
+{
+    "name": "faitheir/dom-parser",
+    "description": "A PHP library , use to parse normal and special DOM string like vue .  to DOM Tree .",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "WangFei",
+            "email": "151241843@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Faitheir\\DomParser\\": "src/DomParser"
+        }
+    }
+}
