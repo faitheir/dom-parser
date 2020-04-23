@@ -1,7 +1,8 @@
 {
     "name": "faitheir/dom-parser",
-    "description": "A PHP library , use to parse normal and special DOM string like vue .  to DOM Tree .",
+    "description": "A PHP library , use to parse normal and special DOM string like vue react.  to DOM Tree .",
     "type": "library",
+    "keywords":["dom", "dom-tree", "vue", "reactjs", "php-library", "php-dom"],
     "license": "MIT",
     "authors": [
         {

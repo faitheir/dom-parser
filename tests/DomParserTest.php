@@ -1,13 +1,11 @@
-# dom-parser
+<?php
+/**
+ * test
+ */
+require_once '../vendor/autoload.php';
 
-A PHP library , use to parse normal and special DOM string like vue react .  to DOM Tree .
+$parser = new \Faitheir\DomParser\DomParser();
 
-## Installation
-    composer require faitheir/dom-parser
-
-## Base Usage
-
-```php
 $html = <<< 'HTML'
     <template>
         <view class="container">
@@ -27,14 +25,7 @@ $html = <<< 'HTML'
     </template>
 HTML;
 
-//
-$parser     = new \Faitheir\DomParser\DomParser($html);
-//$parser   = $parser->setConfig([]);
-$dom        = $parser->parse();
-
-// or
-$parser     = new \Faitheir\DomParser\DomParser();
-$dom        = $parser->setConfig([])->parse($html);
+echo '<pre>';
+$dom = $parser->setConfig([])->parse($html);
 
 print_r($dom);
-```
