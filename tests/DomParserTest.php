@@ -8,6 +8,7 @@ $parser = new \Faitheir\DomParser\DomParser();
 
 $html = <<< 'HTML'
     <template>
+        <!-- doc commnet -->
         <view class="container">
             <navigator url="/pages/show?id=1">
                 <image src="../../static/images/home-by.jpg" mode="widthFix"></image>

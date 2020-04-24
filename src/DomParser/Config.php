@@ -7,10 +7,10 @@ class Config
 
     # parser configs
     private $_config = [
-        'start_tag_reg'     => '/^\s*<([^>\s\/]+)/is',
+        'start_tag_reg'     => '/^\s*<([^>\s\/!]+)/is',
         'start_end_tag_reg' => '/(^\s*>)|(^\s*\/>)/is',
         'end_tag_reg'       => '/^\s*<([^>\s\/]+)/is',
-        'content_reg'       => '/^\s*([^<]+)/is',
+        'content_reg'       => '/^\s*([^<]+)|(<!--.*-->)/is',
         'attrs_reg'         => '/^\s*([^=>< ]+)="([^"]*)"|\s([^=><\s]+)(?=\s|>)/iU',
     ];
 
