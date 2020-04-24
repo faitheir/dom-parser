@@ -1,5 +1,4 @@
 <?php
-
 /**
  * DomParser Index File
  */
@@ -12,9 +11,9 @@ class DomParser
     private $orgDomString = '';
 
     # config object
-    public $config;
+    private $config;
     # parser object
-    public $parser;
+    private $parser;
 
 
     /**
@@ -24,7 +23,7 @@ class DomParser
      */
     public function __construct($domString = '', $config = [])
     {
-        $this->config = new Config($config);
+        $this->config = Config::getInstance($config);
         $this->parser = new Parser();
 
         if ($domString)
@@ -50,7 +49,16 @@ class DomParser
         if ($domString)
             $this->orgDomString = $domString;
 
-        return $this->parser->config($this->config)->parse($this->orgDomString);
+        return $this->parser->parse($this->orgDomString);
     }
 
+    /**
+     * inverse method
+     * @param $domTree
+     * @return string
+     */
+    public function invParse(Node $domTree)
+    {
+        return (string) $domTree;
+    }
 }

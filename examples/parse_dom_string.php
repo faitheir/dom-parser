@@ -1,7 +1,11 @@
 <?php
 /**
- * test
+ * Created by PhpStorm.
+ * User: WangFei
+ * Date: 4/24/2020
+ * Time: 5:34 PM
  */
+
 require_once '../vendor/autoload.php';
 
 $parser = new \Faitheir\DomParser\DomParser();
@@ -28,8 +32,8 @@ $html = <<< 'HTML'
     </template>
 HTML;
 
-//echo '<pre>';
-$dom = $parser->setConfig([
-])->parse($html);
+
+echo '<pre>';
+$dom = $parser->parse($html);
 
 print_r($dom);

@@ -8,11 +8,10 @@ class Parser
     # config obj
     private $_config;
 
-    # set config obj
-    public function config($config = null)
+    #
+    private function _getConfig()
     {
-        $this->_config = $config;
-
+        $this->_config = Config::getInstance();
         #
         $this->_startTagReg = $this->_config->get('start_tag_reg');
         $this->_endTagReg   = $this->_config->get('end_tag_reg');
@@ -30,6 +29,9 @@ class Parser
      */
     public function parse($domString = '')
     {
+        # init parse config
+        $this->_getConfig();
+
         $root = Node::generRootNode();
 
         $domString = trim($domString);
@@ -53,13 +55,11 @@ class Parser
             $stringLen = strlen($domString);
             # match start tad
             list($domString, $node) = $this->_parseStartTag($domString, $parent);
-//            $domString = $this->_parseStartTag($domString, $parent);
 
             # match content
             $domString = $this->_parseContent($domString, $parent);
 
             # match end tag
-//            $domString = $this->_parseEndTag($domString, $parent);
             $domString = $this->_parseEndTag($domString, $node);
 
             if ($stringLen == strlen($domString))

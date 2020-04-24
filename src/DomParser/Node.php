@@ -137,5 +137,78 @@ class Node
         return (new self('content'))->setNodeId()->setContent($content);
     }
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        # config
+        $config = Config::getInstance();
+        $tagIndent = $config->get('tag_indent');
+        $hideGenid = $config->get('hide_genid');
+        $tagIndentString    = str_repeat($tagIndent, $this->level);
+
+        # content
+        if (in_array($this->nodeName, ['content'])) {
+            return $tagIndentString . $this->content . PHP_EOL;
+        }
+        # root
+        if (in_array($this->nodeName, ['root'])) {
+            return $this->_invParseChilds($this->childs);
+        }
+        if (empty($this->nodeName))
+            return '';
+
+        # normal
+        $string = $tagIndentString . '<' . $this->nodeName . ' ';
+        # id
+        if (!empty($this->domId))
+            $string .= ' id="' . $this->domId . '" ';
+        # gener id
+        if ($hideGenid == false)
+            $string .= ' data-genid="' . $this->nodeId . '" ';
+        # class
+        if (!empty($this->domAttrs['class'])) {
+            $string .= ' class="' . implode(' ', $this->domAttrs['class']) . '" ';
+            unset($this->domAttrs['class']);
+        }
+        # style
+        if (!empty($this->domAttrs['style'])) {
+//            $string .= implode(' ', $this->domAttrs['class']);
+            unset($this->domAttrs['style']);
+        }
+        # attrs
+        if (!empty($this->domAttrs)) {
+            foreach ($this->domAttrs as $k => $v) {
+                $string .= ' ' . $k . '="' . $v . '" ';
+            }
+        }
+        # is single
+        if ($this->isSingle == true)
+            return $string . ' />' . PHP_EOL;
+
+        # start tag end
+        $string .= ' >' . PHP_EOL ;
+
+        if (!empty($this->childs))
+            $string .= $this->_invParseChilds($this->childs);
+
+        # end
+        $string .= $tagIndentString . '</' . $this->nodeName . '>' . PHP_EOL;
+
+        return $string;
+    }
+
+    private function _invParseChilds($childs)
+    {
+        if (empty($childs))
+            return '';
+
+        $string = '';
+        foreach ($childs as $child) {
+            $string .= (string) $child;
+        }
+        return $string;
+    }
 
 }

@@ -4,24 +4,36 @@ namespace Faitheir\DomParser;
 
 class Config
 {
+    static private $instance;
 
+    private function __clone(){}
     # parser configs
     private $_config = [
+        # parse
         'start_tag_reg'     => '/^\s*<([^>\s\/!]+)/is',
         'start_end_tag_reg' => '/(^\s*>)|(^\s*\/>)/is',
         'end_tag_reg'       => '/^\s*<([^>\s\/]+)/is',
         'content_reg'       => '/^\s*([^<]+)|(<!--.*-->)/is',
         'attrs_reg'         => '/^\s*([^=>< ]+)="([^"]*)"|\s([^=><\s]+)(?=\s|>)/iU',
+        # inverse parse
+        'tag_indent'        => '    ',
+        'hide_genid'        => false,
     ];
 
-    /**
-     * Config constructor.
-     * @param array $confs
-     */
-    public function __construct($confs = [])
+    private function __construct($confs = [])
     {
         if (!empty($confs))
             $this->setConfig($confs);
+    }
+    static public function getInstance($confs = [])
+    {
+        if (!self::$instance instanceof self) {
+            self::$instance = new self($confs);
+        }
+        if (!empty($confs))
+            self::$instance->setConfig($confs);
+
+        return self::$instance;
     }
 
     /**
