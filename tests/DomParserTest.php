@@ -28,8 +28,11 @@ $html = <<< 'HTML'
     </template>
 HTML;
 
-//echo '<pre>';
 $dom = $parser->setConfig([
 ])->parse($html);
 
+echo '<pre>';
 print_r($dom);
+
+$string = (string) $dom;
+file_put_contents('test.vue', $string);

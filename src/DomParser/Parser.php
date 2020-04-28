@@ -81,6 +81,7 @@ class Parser
         $startTagMatch = [];
         preg_match($this->_startTagReg, $domString, $startTagMatch);
         $startTagName = $startTagMatch[1] ?? '';
+
         if (empty($startTagName))
             return [$domString, null];
 
@@ -131,13 +132,12 @@ class Parser
      * @param $parent
      * @return bool|string
      */
-    private function _parseEndTag($domString, $parent)
+    private function _parseEndTag($domString, $node)
     {
-        if(empty($parent->nodeName))
+        if(empty($node->nodeName))
             return $domString;
-
         $endTagMatch = [];
-        if (preg_match('/^\s*(<\/' . $parent->nodeName . '>)/is', $domString, $endTagMatch)) {
+        if (preg_match('/^\s*(<\/' . $node->nodeName . '>)/is', $domString, $endTagMatch)) {
             $endTagPos    = strpos($domString, $endTagMatch[0]);
             $domString    = substr($domString, $endTagPos + strlen($endTagMatch[0]));
         }
@@ -187,6 +187,7 @@ class Parser
      */
     private function _parseContent($domString, $parent)
     {
+
         # match content
         $contentMatch = [];
         $match = preg_match($this->_contentReg, $domString, $contentMatch);
