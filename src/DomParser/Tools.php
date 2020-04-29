@@ -31,6 +31,24 @@ class Tools
     public function nodeId()
     {
         static $number = 0;
+        if (!$number)
+            $number = time();
+
         return 'genid-' . ++ $number;
+    }
+
+    /**
+     * @param $delimiter
+     * @param $string
+     */
+    public function stringToArray($delimiter, $string)
+    {
+        if (empty(trim($string)))
+            return [];
+
+        $values = array_filter(explode($delimiter, $string), function ($item) {
+            return strlen($item) > 0;
+        });
+        return (array) $values;
     }
 }

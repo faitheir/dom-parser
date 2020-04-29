@@ -14,8 +14,11 @@ class Node
     # is Single
     public $isSingle = false;
 
+    # dom id
     public $domId;
-    # dom attrs id name class style ...
+    # dom name
+    public $domName;
+    # dom attrs class style ...
     public $domAttrs = [];
     # dom
     public $domExtra = [];
@@ -72,6 +75,11 @@ class Node
         $this->domId = $domId;
         return $this;
     }
+    public function setDomName($domName = '')
+    {
+        $this->domName = $domName;
+        return $this;
+    }
 
     /**
      * @param bool $isSingle
@@ -103,15 +111,27 @@ class Node
             return $this;
 
         if ($key == 'class' && $value) {
-            $values = array_filter(explode(' ', $value), function ($item) {
-                return strlen($item) > 0;
-            });
+            $values = Tools::getInstance()->stringToArray(' ', $value);
             $this->domAttrs[$key] = $values;
             return $this;
+        } elseif ($key == 'style' && $value) {
+            $styles = Tools::getInstance()->stringToArray(';', $value);
+            $stylePairs = [];
+            if (!empty($styles)) {
+                foreach ($styles as $style) {
+                    $pair = explode(':', $style);
+                    if (count($pair) != 2)
+                        continue;
+                    $stylePairs[trim($pair[0])] = trim($pair[1]);
+                }
+            }
+            $this->domAttrs[$key] = $stylePairs;
         } elseif ($key == 'data-genid' && $value) {
             $this->setNodeId($value);
         } elseif ($key == 'id' && $value) {
             $this->setDomId($value);
+        } elseif ($key == 'name' && $value) {
+            $this->setDomName($value);
         } else {
             $this->domAttrs[$key] = $value;
         }
@@ -164,6 +184,9 @@ class Node
         # id
         if (!empty($this->domId))
             $string .= ' id="' . $this->domId . '" ';
+        # name
+        if (!empty($this->domName))
+            $string .= ' name="' . $this->domName . '" ';
         # gener id
         if ($hideGenid == false)
             $string .= ' data-genid="' . $this->nodeId . '" ';
@@ -174,7 +197,11 @@ class Node
         }
         # style
         if (!empty($this->domAttrs['style'])) {
-//            $string .= implode(' ', $this->domAttrs['class']);
+            $string .= ' style="';
+            foreach ($this->domAttrs['style'] as $k => $v) {
+                $string .= $k .': ' . $v .'; ';
+            }
+            $string .= '"';
             unset($this->domAttrs['style']);
         }
         # attrs
