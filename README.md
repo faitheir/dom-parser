@@ -69,7 +69,6 @@ $dom      = $parser->parse($html);
 
 ## Query Method
 ```php
-
 # parse dom
 $dom    = $parser->parse($html);
 
@@ -91,4 +90,29 @@ $node   = $dom->genIdQuery('genid-1588151808')->parentQuery();
 $node   = $dom->genIdQuery('genid-1588151808')->childsQuery();
 # siblingsQuery
 $node   = $dom->genIdQuery('genid-1588151808')->siblingsQuery();
+```
+
+## Dom Operate
+```php
+
+$dom = $parser->setConfig([
+])->parse($html);
+
+echo '<pre>';
+
+$node = $dom->idQuery('main-view')->addClass('hello-world');
+$node = $dom->idQuery('main-view')->removeClass('hello-world');
+$node = $dom->idQuery('main-view')->resetClass();
+
+$node = $dom->nameQuery('nav')->addStyle('border', '10px solid red');
+$node = $dom->nameQuery('nav')->addMultStyle(['border' => '10px solid red', 'color' => 'blue']);
+$node = $dom->nameQuery('nav')->removeStyle('border');
+$node = $dom->nameQuery('nav')->resetStyle();
+
+$node = $dom->nameQuery('nav')->addAttr(':click', "alter('hello world')");
+$node = $dom->nameQuery('nav')->addMultAttr([':click' => "alter('hello world')", 'v-model' => 'testvari']);
+$node = $dom->nameQuery('nav')->removeAttr(':click');
+$node = $dom->nameQuery('nav')->resetAttr();
+
+$node = $dom->nameQuery('nav')->resetAllAttr();
 ```

@@ -31,7 +31,9 @@ class Node
     # node content
     public $content = '';
 
+    #
     use NodeQuery;
+    use NodeOperate;
 
     /**
      * Node constructor.
