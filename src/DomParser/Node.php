@@ -23,12 +23,15 @@ class Node
     # dom
     public $domExtra = [];
 
+    # parent
+    public $parent = null;
     # child nodes
     public $childs = [];
 
     # node content
     public $content = '';
 
+    use NodeQuery;
 
     /**
      * Node constructor.

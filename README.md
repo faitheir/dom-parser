@@ -65,3 +65,30 @@ $configs = [
 $parser   = $parser->setConfig($configs);
 $dom      = $parser->parse($html);
 ```
+
+
+## Query Method
+```php
+
+# parse dom
+$dom    = $parser->parse($html);
+
+
+# genIdQuery
+$node   = $dom->genIdQuery('genid-1588151808');
+# idQuery
+$node   = $dom->idQuery('main-view');
+# nameQuery
+$node   = $dom->nameQuery('scan');
+
+# tagsQuery
+$node   = $dom->tagsQuery('view');
+$node   = $dom->tagsQuery('view', ['class' => 'scan']);
+
+# parentQuery
+$node   = $dom->genIdQuery('genid-1588151808')->parentQuery();
+# childsQuery
+$node   = $dom->genIdQuery('genid-1588151808')->childsQuery();
+# siblingsQuery
+$node   = $dom->genIdQuery('genid-1588151808')->siblingsQuery();
+```

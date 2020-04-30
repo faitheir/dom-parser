@@ -90,6 +90,7 @@ class Parser
 
         # new Node
         $node = new Node($startTagName);
+        $node->parent       = $parent;
         $node->level        = $parent->level + 1;
         $parent->childs[]   = $node;
 
@@ -202,6 +203,7 @@ class Parser
 
         # gener content node
         $contentDom = Node::generContentNode($content);
+        $contentDom->parent = $parent;
         $contentDom->level  = $parent->level + 1;
         $parent->childs[]   = $contentDom;
 
